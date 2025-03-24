@@ -1,8 +1,7 @@
-# Kotlin GUI Starter
+# Kotlin GUI Images Demo
 
-This is a starter project for a simple Kotlin GUI application.
+This is a demo showing how images can be displayed in a Kotlin / Swing GUI
 
-The Java Swing library is used, plus the FlatLAF look-and-feel for a reasonably modern look.
+Images are pulled from an **images folder** within the [src](src/) folder. Images can be **JPEG**, **PNG** or **GIF** format.
 
-The app is structured to provide a simple view / model setup with the App class storing application data (the 'model'), and the MainWindow class providing the 'view'.
-
+![demo.gif](demo.gif)

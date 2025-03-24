@@ -1,15 +1,9 @@
 /**
  * ===============================================================
- * Kotlin GUI Starter
+ * Kotlin GUI Image Demo
  * ===============================================================
  *
- * This is a starter project for a simple Kotlin GUI application.
- * The Java Swing library is used, plus the FlatLAF look-and-feel
- * for a reasonably modern look.
- *
- * The app is structured to provide a simple view / model setup
- * with the App class storing application data (the 'model'), and
- * the MainWindow class providing the 'view'.
+ * This demo shows
  */
 
 import com.formdev.flatlaf.FlatDarkLaf
@@ -34,16 +28,21 @@ fun main() {
  * stored, plus any application logic functions
  */
 class App() {
-    // Constants defining any key values
-    val MAX_CLICKS = 10
-
     // Data fields
-    var clicks = 0
+    val imageFiles = listOf(
+        "colour.png",
+        "face.png",
+        "pizza.png",
+        "finn.png",
+        "jake.png",
+        "invader.png",
+        "cpy.png",
+        "cop.png")
+    var currentImageFile = imageFiles.random()
 
     // Application logic functions
-    fun updateClickCount() {
-        clicks++
-        if (clicks > MAX_CLICKS) clicks = MAX_CLICKS
+    fun pickRandomImage() {
+        currentImageFile = imageFiles.random()
     }
 }
 
@@ -56,8 +55,8 @@ class App() {
 class MainWindow(val app: App) : JFrame(), ActionListener {
 
     // Fields to hold the UI elements
-    private lateinit var infoLabel: JLabel
-    private lateinit var helloButton: JButton
+    private lateinit var imageLabel: JLabel
+    private lateinit var randomButton: JButton
 
     /**
      * Configure the UI and display it
@@ -76,8 +75,8 @@ class MainWindow(val app: App) : JFrame(), ActionListener {
      * Configure the main window
      */
     private fun configureWindow() {
-        title = "Kotlin Swing GUI Demo"
-        contentPane.preferredSize = Dimension(600, 350)
+        title = "Kotlin Swing GUI Image Demo"
+        contentPane.preferredSize = Dimension(350, 425)
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         isResizable = false
         layout = null
@@ -89,19 +88,18 @@ class MainWindow(val app: App) : JFrame(), ActionListener {
      * Populate the UI with UI controls
      */
     private fun addControls() {
-        val baseFont = Font(Font.SANS_SERIF, Font.PLAIN, 36)
+        val baseFont = Font(Font.SANS_SERIF, Font.PLAIN, 24)
 
-        infoLabel = JLabel("INFO HERE")
-        infoLabel.horizontalAlignment = SwingConstants.CENTER
-        infoLabel.bounds = Rectangle(50, 50, 500, 100)
-        infoLabel.font = baseFont
-        add(infoLabel)
+        imageLabel = JLabel()
+        imageLabel.bounds = Rectangle(25, 25, 300, 300)
+        imageLabel.font = baseFont
+        add(imageLabel)
 
-        helloButton = JButton("Click Me!")
-        helloButton.bounds = Rectangle(50,200,500,100)
-        helloButton.font = baseFont
-        helloButton.addActionListener(this)     // Handle any clicks
-        add(helloButton)
+        randomButton = JButton("Random Image")
+        randomButton.bounds = Rectangle(25, 350, 300, 50)
+        randomButton.font = baseFont
+        randomButton.addActionListener(this)     // Handle any clicks
+        add(randomButton)
     }
 
 
@@ -110,13 +108,12 @@ class MainWindow(val app: App) : JFrame(), ActionListener {
      * of the application model
      */
     fun updateView() {
-        if (app.clicks == app.MAX_CLICKS) {
-            infoLabel.text = "Max clicks reached!"
-            helloButton.isEnabled = false
-        }
-        else {
-            infoLabel.text = "You clicked ${app.clicks} times"
-        }
+        // Gte the image file
+        var image = ImageIcon("src/images/" + app.currentImageFile).image
+        // Resize it to fit the label
+        image = image.getScaledInstance(300, 300, Image.SCALE_SMOOTH)
+        // And show it
+        imageLabel.icon = ImageIcon(image)
     }
 
     /**
@@ -126,8 +123,8 @@ class MainWindow(val app: App) : JFrame(), ActionListener {
      */
     override fun actionPerformed(e: ActionEvent?) {
         when (e?.source) {
-            helloButton -> {
-                app.updateClickCount()
+            randomButton -> {
+                app.pickRandomImage()
                 updateView()
             }
         }
