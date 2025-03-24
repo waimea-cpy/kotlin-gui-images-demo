@@ -3,7 +3,12 @@
  * Kotlin GUI Image Demo
  * ===============================================================
  *
- * This demo shows
+ * This is a demo showing how images can be displayed in a Kotlin /
+ * Swing GUI
+ *
+ * Images are pulled from an **images folder** within the src
+ * folder. Images can be JPEG, PNG or GIF format.
+ *
  */
 
 import com.formdev.flatlaf.FlatDarkLaf
